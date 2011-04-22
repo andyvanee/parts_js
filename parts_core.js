@@ -1,4 +1,10 @@
-// Build the core part and attach it
+/*!
+ *  Parts_js - Core Library
+ *  Copyright 2011, Andy Vanee
+ *  Released under the MIT, BSD, and GPL Licenses.
+ *  More information: http://andyvanee.com/
+ */
+ 
 (function() {
   var parts = function(arg) {
     if (typeof arg == "string") return parts.select(arg);

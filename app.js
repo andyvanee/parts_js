@@ -1,15 +1,22 @@
+/*!
+ *  Demo for parts_js
+ *  Copyright 2011, Andy Vanee
+ *  Released under the MIT, BSD, and GPL Licenses.
+ *  More information: http://andyvanee.com/
+ */
+ 
 window.onload = function(){
   var stylesheet = document.createElement("style");
   stylesheet.type = "text/css";
   stylesheet.innerHTML = "body {background-color: #D0D5DA;} ";
   stylesheet.innerHTML += "#tests {font-family:'Helvetica', sans-serif; padding:22px; margin: 6px;} ";
   stylesheet.innerHTML += "p.fadein{opacity: 0; font-size: 22px;} p.fadein:hover{color: #229} ";
-  p("head").obj[0].appendChild(stylesheet);
+  p("head").value[0].appendChild(stylesheet);
 
-  p("#tests").obj[0].innerHTML = "<h1>parts_js:</h1>";
-  setTimeout(function(){p("h1").obj[0].innerHTML += " running"}, 400);
+  p("#tests").value[0].innerHTML = "<h1>parts_js:</h1>";
+  setTimeout(function(){p("h1").value[0].innerHTML += " running"}, 400);
   
-  p("#tests").obj[0].innerHTML += "<p class='fadein'>Enjoy the ride!</p>";
+  p("#tests").value[0].innerHTML += "<p class='fadein'>Enjoy the ride!</p>";
   app.interval = setInterval(app.fadein, 20);
   
   app.tests();
@@ -26,9 +33,9 @@ app = {
 }
 
 app.tests = function(){
-  (p("body").obj[0].toString() == "[object HTMLBodyElement]") ? 0 : console.log("Body selection failed");
-  (p('body').obj[0] == document.getElementsByTagName("body")[0]) ? 0 : console.log("Body identity test failed");
-  (p('#tests').obj[0] == document.getElementById("tests")) ? 0 : console.log("#tests identity test failed");
+  (p("body").value[0].toString() == "[object HTMLBodyElement]") ? 0 : console.log("Body selection failed");
+  (p('body').value[0] == document.getElementsByTagName("body")[0]) ? 0 : console.log("Body identity test failed");
+  (p('#tests').value[0] == document.getElementById("tests")) ? 0 : console.log("#tests identity test failed");
   
   app.counter=0;
   console.log("p('.fadein').each found this: ");
