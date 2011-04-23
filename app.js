@@ -10,16 +10,25 @@ window.onload = function(){
   app.tests();
 }
 
-app = {}
+app = {
+  console: function(str){
+    p("#console").value[0].innerHTML += "<p>" + str + "</p>";
+  }
+}
 
 app.tests = function(){
   p("#tests").value[0].innerHTML = "<h1>parts_js: running</h1>";
-  p("#console").value[0].innerHTML = "<p>ID selection successful.</p>";
-  p("#console p").value[0].innerHTML += "<br>&nbsp;&nbsp;Descendant selection successful.";
-  p(".sidebar").value[0].innerHTML += "<p class='needle'>Class selection successful.</p>";
-  p("div .needle").value[0].innerHTML += "<br>'div .needle' selection successful.";
+  app.console("ID selection working.");
+  p("#console p").value[0].innerHTML += "<br>&nbsp;&nbsp;Descendant selection working.";
+  p(".sidebar").value[0].innerHTML += "<p class='needle'>Class selection working.</p>";
+  p("div .needle").value[0].innerHTML += "<br>Child selection working.";
   p("body").each(function(value){
-    p("#console p").value[0].innerHTML += "<br>p('body').each found: " + value;  
+    app.console("p('body').each found: " + value);  
+  });
+  console.log("Contents of .needle: " + p(".needle").html());
+  
+  p(".needle").html( function(old){
+    return old + "<br> p('.needle').html( function(oldhtml){ return html }) working."
   });
 }
 
@@ -30,6 +39,6 @@ app.style = function(){
     "div {background-color: #DAE1E5; margin: 2%; padding: 2%; overflow-y: auto;} " +
     "p {margin: 2px 10px;} " +
     "#tests { width: 30%; height: 60%; float: left; } " +
-    "#console{float:right; width: 50%; height: 60%; color: #555;}";
+    "#console{float:right; width: 50%; height: 60%; color: #555; font-family: monospace;}";
   p("head").value[0].appendChild(stylesheet);
 }

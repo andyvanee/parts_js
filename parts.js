@@ -11,10 +11,7 @@
     else return parts.value(arg);
   };
   parts.mixin = function(name, fn, args) {
-    this[name] = function(args) {fn(this, args); return this;}
-  };
-  parts.bolton = function(name, fn, args) {
-    this[name] = function(args) {return fn(this, args);}
+    this[name] = function(args) {var r = fn(this, args); if(r) return r; return this;}
   };
   parts.select = function(selector) {
     this.queryString = selector;
@@ -43,6 +40,15 @@ parts.mixin(
     for (i in obj.value){ 
       fn(obj.value[i]);
     }
+  }
+);
+
+parts.mixin(
+  "html", 
+  function(obj, arg){
+    if (arg == undefined) return obj.value[0].innerHTML;
+    if (typeof arg == "function") { obj.value[0].innerHTML = arg(obj.value[0].innerHTML) };
+    if (typeof arg == "string") { obj.value[0].innerHTML = arg; }
   }
 );
 
