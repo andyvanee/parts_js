@@ -27,5 +27,15 @@ The boloton function is for adding functions that return a value other than a
 parts object. They are the end-of-line when it comes to chaining. The toString()
 function is a good example because it should produce a string, not an object.
 
+parts_core.js is the 20-some lines that enables all the other fun stuff. If you
+are inclined to drastically personalize the library, that would be your starting 
+point. It may grow somewhat if there is a real need, but I'd like to keep it as
+lean as possible.
+
+parts.js will grow to be a somewhat more real world example of how to extend the
+core.
+
+To start, clone the repo and open index.html for a basic demo.
+
 That's about it for now. Because this is extremely alpha software, use caution and
 please provide feedback!
