@@ -18,13 +18,10 @@ This is the current wrapped object. Usually an array of DOM elements.
 p.mixin()
 The mixin function is the mechanism for adding functions to the library. The
 mixin functions are called with the current object as the first argument and
-any user supplied argument as the second. Mixin functions do not return any values
-but may modify p.obj or call other functions when it runs.
-
-p.bolton()
-The boloton function is for adding functions that return a value other than a
-parts object. They are the end-of-line when it comes to chaining. The toString()
-function is a good example because it should produce a string, not an object.
+any user supplied argument as the second. Mixin functions should not return
+a value unless it makes sense for them to. If a mixin function returns a value,
+the chain is broken and the value is returned to the caller. The toString function
+is a good example of an unchainable function: it must return a string.
 
 sel()
 sel is the barebones selector library included. At the moment it only supports
