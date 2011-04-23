@@ -27,7 +27,8 @@
 })();
 
 
-parts.mixin("select",
+parts.mixin(
+  "select",
   function(obj, selector) {
     obj.queryString = selector;
     obj.value = sel(selector);
@@ -35,8 +36,9 @@ parts.mixin("select",
 );
 
 // p().each(function() {}) => p()
-parts.mixin(
-  "each", function(obj, fn) {
+parts.mixin( 
+  "each",
+  function(obj, fn) {
     for (i in obj.value){ 
       fn(obj.value[i]);
     }
@@ -51,6 +53,9 @@ parts.mixin(
     if (typeof arg == "string") { obj.value[0].innerHTML = arg; }
   }
 );
+
+
+// Functions to be included as mixins
 
 /* Sel Selector engine */
 (function(){
