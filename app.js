@@ -47,5 +47,3 @@ app.tests = function(){
   (app.counter === 1) ? 0 : app.console("Error in each() function.");
   
 }
-
-sel("body");
