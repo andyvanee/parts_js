@@ -26,10 +26,10 @@ app.tests = function(){
 app.style = function(){
   var stylesheet = document.createElement("style");
   stylesheet.type = "text/css";
-  stylesheet.innerHTML = "body {background-color: #D0D5DA; font-family:'Helvetica', sans-serif;}";
-  stylesheet.innerHTML += "div {background-color: #DAE1E5; margin: 2%; padding: 2%; overflow-y: auto;}"
-  stylesheet.innerHTML += "p {margin: 2px 10px;}";
-  stylesheet.innerHTML += "#tests { width: 30%; height: 60%; float: left; } ";
-  stylesheet.innerHTML += "#console{float:right; width: 50%; height: 60%; color: #555;}";
+  stylesheet.innerHTML = "body {background-color: #D0D5DA; font-family:'Helvetica', sans-serif;} " +
+    "div {background-color: #DAE1E5; margin: 2%; padding: 2%; overflow-y: auto;} " +
+    "p {margin: 2px 10px;} " +
+    "#tests { width: 30%; height: 60%; float: left; } " +
+    "#console{float:right; width: 50%; height: 60%; color: #555;}";
   p("head").value[0].appendChild(stylesheet);
 }
