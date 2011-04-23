@@ -1,40 +1,42 @@
 Parts_JS
 
 The parts library is meant to be completely modular in design. The core
-of the library is extremely small(and useless!) but easy to build upon.
+of the library is extremely small but easy to build upon.
 
 At the moment the library only provides a mechanism for including a selector
-library (Sizzle by default), mixins and bolt-ons.
+library, and mixins to extend the library.
 
 p()
 The selector is the default function. It gets the ball rolling by wrapping an
-object in a chainable function. This can be an array of DOM objects like Sizzle
-provides, but it could just as easily be a string or array that you want your
-functions to operate upon.
+object in a chainable function. This can be an array of DOM objects, but it 
+could just as easily be a string or array that you want your functions to 
+operate upon.
 
-p.obj
-This is the current object being operated upon. While using Sizzle, it's probably
-going to be an array of DOM elements.
+p.value
+This is the current wrapped object. Usually an array of DOM elements.
 
 p.mixin()
 The mixin function is the mechanism for adding functions to the library. The
 mixin functions are called with the current object as the first argument and
-any user supplied argument as the second. Mixin functions do not return any values
-but may modify p.obj or call other functions when it runs.
+any user supplied argument as the second. Mixin functions generally do not 
+return any values but may modify p.obj or call other functions when they run.
+If they do return a value, they break the chain and the value is passed to the
+caller. An obvious example would be a toString function, which should just 
+return a string.
 
-p.bolton()
-The boloton function is for adding functions that return a value other than a
-parts object. They are the end-of-line when it comes to chaining. The toString()
-function is a good example because it should produce a string, not an object.
+sel()
+sel is the barebones selector library included. At the moment it only supports
+class, id, tag name and child selectors. Some examples of what's currently
+supported:
+p("#id")
+p(".class")
+p("body")
+p("li #id")
+But NOT p("div.class") yet...
 
-parts_core.js is the 20-some lines that enables all the other fun stuff. If you
-are inclined to drastically personalize the library, that would be your starting 
-point. It may grow somewhat if there is a real need, but I'd like to keep it as
-lean as possible.
-
-parts.js will grow to be a somewhat more real world example of how to extend the
-core.
-
+If this is too restrictive, i've included a version parts_sizzle.js which supports
+all the css selectors you could imagine.
+ 
 To start, clone the repo and open index.html for a basic demo.
 
 That's about it for now. Because this is extremely alpha software, use caution and
