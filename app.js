@@ -18,15 +18,18 @@ app.tests = function(){
   p("#console p").value[0].innerHTML += "<br>&nbsp;&nbsp;Descendant selection successful.";
   p(".sidebar").value[0].innerHTML += "<p class='needle'>Class selection successful.</p>";
   p("div .needle").value[0].innerHTML += "<br>'div .needle' selection successful.";
+  p("body").each(function(value){
+    p("#console p").value[0].innerHTML += "<br>p('body').each found: " + value;  
+  });
 }
 
 app.style = function(){
   var stylesheet = document.createElement("style");
   stylesheet.type = "text/css";
   stylesheet.innerHTML = "body {background-color: #D0D5DA; font-family:'Helvetica', sans-serif;}";
-  stylesheet.innerHTML += "div {background-color: #DAE1E5; margin: 2%; padding: 2%;}"
+  stylesheet.innerHTML += "div {background-color: #DAE1E5; margin: 2%; padding: 2%; overflow-y: auto;}"
   stylesheet.innerHTML += "p {margin: 2px 10px;}";
-  stylesheet.innerHTML += "#tests { width: 60%; float: left; } ";
-  stylesheet.innerHTML += "#console{float:right; height: 60%; width: 20%; color: #555; overflow-y: auto;}";
+  stylesheet.innerHTML += "#tests { width: 30%; height: 60%; float: left; } ";
+  stylesheet.innerHTML += "#console{float:right; width: 50%; height: 60%; color: #555;}";
   p("head").value[0].appendChild(stylesheet);
-  }
+}

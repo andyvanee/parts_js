@@ -37,6 +37,14 @@ parts.mixin("select",
   }
 );
 
+// p().each(function() {}) => p()
+parts.mixin(
+  "each", function(obj, fn) {
+    for (i in obj.value){ 
+      fn(obj.value[i]);
+    }
+  }
+);
 
 /* Sel Selector engine */
 (function(){
