@@ -27,13 +27,24 @@
   return (window.parts = window.p = parts);
 })();
 
+
+// p().each( fn(element, index, object) )
+
 parts.mixin( 
   "each",
   function(){
-    var each = function(obj, fn) {
-      var val = obj.value;
-      for (i in val){ fn(val[i], i) }
-    };
+    if (Array.prototype.forEach;){
+      var each = function(obj, fn) {
+        var val = obj.value;
+        val.forEach(fn);
+      };
+    }
+    else {
+      var each = function(obj, fn) {
+        var val = obj.value;
+        for (i in val){ fn(val[i], i, obj.value) }
+      };
+    }
     return each;
   }
 );
