@@ -7,8 +7,8 @@
  
 (function() {
   var parts = function(arg) {
-    if (typeof arg == "string") return parts.select(arg);
-    else return parts.value(arg);
+    if (typeof arg == "string") { return parts.select(arg) }
+    else { return parts.setValue(arg) }
   };
   parts.mixin = function(name, fn, args) {
     var f = fn();
@@ -20,7 +20,7 @@
     return this;
   };
   
-  parts.value = function(value) {
+  parts.setValue = function(value) {
     this.value = value;
     return this;
   }
@@ -33,18 +33,10 @@
 parts.mixin( 
   "each",
   function(){
-    if (Array.prototype.forEach){
-      var each = function(obj, fn) {
-        var val = obj.value;
-        val.forEach(fn);
-      };
-    }
-    else {
-      var each = function(obj, fn) {
-        var val = obj.value;
-        for (i in val){ fn(val[i], i, obj.value) }
-      };
-    }
+    var each = function(obj, fn) {
+      var val = obj.value, len = obj.value.length;
+      for (var i = 0; i < len; i++) { fn(val[i], i , val) }
+    };
     return each;
   }
 );

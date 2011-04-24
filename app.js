@@ -22,16 +22,19 @@ app.tests = function(){
   p("#console p").value[0].innerHTML += "<br>&nbsp;&nbsp;Descendant selection working.";
   p(".sidebar").value[0].innerHTML += "<p class='needle'>Class selection working.</p>";
   p("div .needle").value[0].innerHTML += "<br>Child selection working.";
-  console.log("Contents of .needle: " + p(".needle").html());
+  app.console("Contents of .needle: <br>" + p(".needle").html());
   
   p(".needle").html( function(old){
-    return old + "<br> p('.needle').html( function(oldhtml){ return html }) working."
+    return "<hr>" + old + "<br> p('.needle').html( function(oldhtml){ return html }) is working."
   });
-  
+
+  app.console("<hr> Each div:");  
   p("div").each(function(value, index){
-    // console.log(value.id);
-    app.console("p('p').each found: ");
-    app.console(index + " : " + value + " : " + value.id);
+    app.console( index + ": value:" + value + " id:" + value.id);
+  });
+  app.console("<hr> Each element if a hybrid array");
+  p( ["hello parts!", 0.5, {id : "an_object"}] ).each(function(value, index, obj){
+    app.console(index + " : " + typeof value + " : " + obj);
   });
 
   
