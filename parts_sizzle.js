@@ -46,11 +46,11 @@ parts.mixin("select",
 // p().obj => Object
 
 // p().each(function() {}) => p()
-parts.mixin(
-  "each", function(obj, fn) {
-    for (i in obj.value){ 
-      fn(obj.value[i]);
-    }
+parts.mixin( 
+  "each",
+  function(obj, fn) {
+    var val = obj.value;
+    for (i in val){ fn(val[i], i) }
   }
 );
 

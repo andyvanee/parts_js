@@ -22,14 +22,19 @@ app.tests = function(){
   p("#console p").value[0].innerHTML += "<br>&nbsp;&nbsp;Descendant selection working.";
   p(".sidebar").value[0].innerHTML += "<p class='needle'>Class selection working.</p>";
   p("div .needle").value[0].innerHTML += "<br>Child selection working.";
-  p("body").each(function(value){
-    app.console("p('body').each found: " + value);  
-  });
   console.log("Contents of .needle: " + p(".needle").html());
   
   p(".needle").html( function(old){
     return old + "<br> p('.needle').html( function(oldhtml){ return html }) working."
   });
+  
+  p("div").each(function(value, index){
+    // console.log(value.id);
+    app.console("p('p').each found: ");
+    app.console(index + " : " + value + " : " + value.id);
+  });
+
+  
 }
 
 app.style = function(){

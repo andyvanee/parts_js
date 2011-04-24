@@ -39,9 +39,8 @@ parts.mixin(
 parts.mixin( 
   "each",
   function(obj, fn) {
-    for (i in obj.value){ 
-      fn(obj.value[i]);
-    }
+    var val = obj.value;
+    for (i in val){ fn(val[i], i) }
   }
 );
 
