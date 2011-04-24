@@ -33,7 +33,7 @@
 parts.mixin( 
   "each",
   function(){
-    if (Array.prototype.forEach;){
+    if (Array.prototype.forEach){
       var each = function(obj, fn) {
         var val = obj.value;
         val.forEach(fn);
