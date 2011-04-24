@@ -1,22 +1,17 @@
 /*!
- *  Parts_js 
+ *  Parts_js - Core Library
  *  Copyright 2011, Andy Vanee
  *  Released under the MIT, BSD, and GPL Licenses.
  *  More information: http://andyvanee.com/
  */
  
-// Build the core part and attach it
-
 (function() {
   var parts = function(arg) {
     if (typeof arg == "string") return parts.select(arg);
     else return parts.value(arg);
   };
   parts.mixin = function(name, fn, args) {
-    this[name] = function(args) {fn(this, args); return this;}
-  };
-  parts.bolton = function(name, fn, args) {
-    this[name] = function(args) {return fn(this, args);}
+    this[name] = function(args) {var r = fn(this, args); if(r) return r; return this;}
   };
   parts.select = function(selector) {
     this.queryString = selector;
@@ -31,8 +26,23 @@
   return (window.parts = window.p = parts);
 })();
 
+parts.mixin( 
+  "each",
+  function(obj, fn) {
+    var val = obj.value;
+    for (i in val){ fn(val[i], i) }
+  }
+);
 
-// Add mixins and bolt-ons to the core as needed
+parts.mixin(
+  "html", 
+  function(obj, arg){
+    if (arg == undefined) return obj.value[0].innerHTML;
+    if (typeof arg == "function") { obj.value[0].innerHTML = arg(obj.value[0].innerHTML) };
+    if (typeof arg == "string") { obj.value[0].innerHTML = arg; }
+  }
+);
+
 
 // p("selector") => p()
 // p.select("selector") => p()
@@ -42,48 +52,6 @@ parts.mixin("select",
     obj.value = Sizzle(selector);
   }
 );
-
-// p().obj => Object
-
-// p().each(function() {}) => p()
-parts.mixin( 
-  "each",
-  function(obj, fn) {
-    var val = obj.value;
-    for (i in val){ fn(val[i], i) }
-  }
-);
-
-// p().log() => p()
-parts.mixin(
-  "log", 
-  function(obj) {
-    console.log(obj.value)
-  }
-);
-
-// p().toString => String
-parts.bolton("toString", 
-  function(obj) {
-    return 'Parts object --\n' + 'queryString: ' + obj.queryString + '\nparts: ' + obj.value;
-  }
-);
-
-// p().cssText => p()
-parts.mixin('cssText', function(obj, arg) {
-  if (typeof arg === 'object') {
-    var style = "";
-    for (k in arg) {
-      style += k + ":" + arg[k] + ";"; 
-    }
-    for (i in obj.value) {
-      if (obj.value[i].style) { obj.value[i].style.cssText = style;} 
-    }
-    
-  }
-  else if (typeof arg === 'string') {}
-  else {console.log("invalid argument to css.")};
-});
 
 /*!
  * Sizzle CSS Selector Engine

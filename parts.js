@@ -11,7 +11,8 @@
     else return parts.value(arg);
   };
   parts.mixin = function(name, fn, args) {
-    this[name] = function(args) {var r = fn(this, args); if(r) return r; return this;}
+    var f = fn();
+    this[name] = function(args) {var r = f(this, args); if(r) return r; return this;}
   };
   parts.select = function(selector) {
     this.queryString = selector;
@@ -26,35 +27,42 @@
   return (window.parts = window.p = parts);
 })();
 
-
-parts.mixin(
-  "select",
-  function(obj, selector) {
-    obj.queryString = selector;
-    obj.value = sel(selector);
-  }
-);
-
-// p().each(function() {}) => p()
 parts.mixin( 
   "each",
-  function(obj, fn) {
-    var val = obj.value;
-    for (i in val){ fn(val[i], i) }
+  function(){
+    var each = function(obj, fn) {
+      var val = obj.value;
+      for (i in val){ fn(val[i], i) }
+    };
+    return each;
   }
 );
 
 parts.mixin(
   "html", 
-  function(obj, arg){
-    if (arg == undefined) return obj.value[0].innerHTML;
-    if (typeof arg == "function") { obj.value[0].innerHTML = arg(obj.value[0].innerHTML) };
-    if (typeof arg == "string") { obj.value[0].innerHTML = arg; }
+  function(){
+    var html = function(obj, arg){
+      if (arg == undefined) return obj.value[0].innerHTML;
+      if (typeof arg == "function") { obj.value[0].innerHTML = arg(obj.value[0].innerHTML) };
+      if (typeof arg == "string") { obj.value[0].innerHTML = arg; }
+    }
+    return html;
   }
 );
 
 
 // Functions to be included as mixins
+
+parts.mixin(
+  "select",
+  function(){
+    var select = function(obj, selector) {
+      obj.queryString = selector;
+      obj.value = sel(selector);
+    }
+  return select;
+  }
+);
 
 /* Sel Selector engine */
 (function(){
