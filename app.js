@@ -25,7 +25,6 @@ app.tests = function(){
   p("#needle").html( function(old){
     return old + "<br> p('#needle').html( function(oldhtml){ return html }) is working."
   });
-  // var x = document.querySelectorAll("div#tests");
   app.console("<br>Contents of .needle: <br>" + p("#needle").html());
   app.console("<br>Each div:");  
   p("div").each(function(value, index){
@@ -43,6 +42,10 @@ app.tests = function(){
     p(hybridArray).reduce(function(val){return val > 10}).value 
   );
   p("div").html(function(old){return old + "<br>Adding content to all divs."});
+  
+  var x = document.querySelectorAll("div");
+  p("p", x).each(function(value){ console.log(value.innerHTML) });
+
 }
 
 app.style = function(){

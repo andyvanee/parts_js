@@ -102,9 +102,6 @@ parts.mixin(
   }
 )
 
-
-// Functions to be included as mixins
-
 parts.mixin(
   "select",
   function(){
@@ -120,8 +117,17 @@ parts.mixin(
 (function(){
   if (document.querySelectorAll){
     var sel = function( selector, context ) {
-      if (context) { return context.querySelectorAll(selector)}
-      else { return document.querySelectorAll(selector); }
+      var value = [], result;
+      if (context) {
+        for (var i in context){
+          result = context[i].querySelectorAll(selector);
+          for (var i in result){
+            if (result[i] && result[i].parentNode) value.push(result[i])
+          }
+        }
+      }
+      else { value = document.querySelectorAll(selector) }
+      return value;
     }
   }
   else {
