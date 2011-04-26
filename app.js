@@ -45,6 +45,14 @@ app.tests = function(){
   
   var x = document.querySelectorAll("div");
   p("p", x).each(function(value){ console.log(value.innerHTML) });
+  p("#tests").widget({
+    type: "div",
+    content: "New Widget",
+    className: "widget",
+    id: "widget_1",
+    style: "background-color: #CCC; color: #FFF; width: 100px; padding: 10px 20px; border-radius: 4px;"
+  });
+
 }
 
 app.style = function(){

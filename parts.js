@@ -15,12 +15,12 @@
     this[name] = function(args) {var r = f(this, args); if(r) return r; return this;}
   };
   parts.select = function(selector) {
-    this.queryString = selector;
-    this.value = document.getElementById(selector);
-    function F(){}; F.prototype = this;
-    return new F();
-  };
-  
+    var f = function(){}; f.prototype = this;
+    var newObj = new f();
+    newObj.queryString = selector;
+    newObj.value = document.getElementById(selector);
+    return newObj;
+  };  
   parts.set_value = function(value) {
     this.queryString = "";
     this.value = value;
@@ -68,23 +68,21 @@ parts.mixin(
   }
 );
 
-/*
 parts.mixin(
   "widget",
   function(){
     var widget = function(obj, arg){
-      var elem = document.createElement("div");
+      var elem = document.createElement(arg.type);
       elem.id = arg.id;
-      elem.className = arg.class;
+      elem.className = arg.className;
       elem.style.cssText = arg.style;
       elem.innerHTML = arg.content;
-      var parent = parts(arg.parent).value[0];
+      var parent = obj.value[0];
       parent.appendChild(elem);
     }
     return widget;
   }
 );
-*/
 
 parts.mixin(
   "append", 
@@ -127,11 +125,10 @@ parts.mixin(
     var select = function(obj, selector) {
       var f = function(){};
       f.prototype = obj;
-      var nf = new f();
-      
-      nf.queryString = selector;
-      nf.value = sel(selector);
-      return nf;
+      var newObj = new f();
+      newObj.queryString = selector;
+      newObj.value = sel(selector);
+      return newObj;
     }
   return select;
   }
