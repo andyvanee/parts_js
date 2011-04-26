@@ -45,7 +45,6 @@ app.tests = function(){
   
   var x = document.querySelectorAll("div");
   p("p", x).each(function(value){ console.log(value.innerHTML) });
-
 }
 
 app.style = function(){
