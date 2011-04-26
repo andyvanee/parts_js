@@ -68,6 +68,7 @@ parts.mixin(
   }
 );
 
+/*
 parts.mixin(
   "widget",
   function(){
@@ -83,6 +84,7 @@ parts.mixin(
     return widget;
   }
 );
+*/
 
 parts.mixin(
   "append", 
