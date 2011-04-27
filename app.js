@@ -6,8 +6,7 @@
  */
  
 window.onload = function(){
-  app.style();
-  app.tests();
+  app.setup();
 }
 
 app = {
@@ -16,8 +15,8 @@ app = {
   }
 }
 
-app.tests = function(){
-  p("div").html("<h2>parts_js: running</h2>");
+app.setup = function(){
+  p("#tests, #console").html(function(old){return old + "<h2>parts_js: running</h2>"});
   p("#console").append("<p><br>ID selection working. p('#console')</p>");
   p("#console p").append("<br>Descendant selection working. p('#console p')");
   p(".sidebar").append("<p id='needle' class='needle'>Class selection working. p('.sidebar')</p>");
@@ -41,27 +40,28 @@ app.tests = function(){
     "reduce(){ val > 10 } === "  +
     p(hybridArray).reduce(function(val){return val > 10}).value 
   );
-  p("div").html(function(old){return old + "<br>Adding content to all divs."});
+/*
+  p("div").html(function(old){
+    return old + "<br>Adding content to all divs.";
+  });
+*/
   
   var x = document.querySelectorAll("div");
   p("p", x).each(function(value){ console.log(value.innerHTML) });
   p("#tests").widget({
     type: "div",
     content: "New Widget",
-    className: "widget",
+    className: "my_widget",
     id: "widget_1",
-    style: "background-color: #CCC; color: #FFF; width: 100px; padding: 10px 20px; border-radius: 4px;"
+    selectable: false
   });
 
-}
-
-app.style = function(){
-  var stylesheet = document.createElement("style");
-  stylesheet.type = "text/css";
-  stylesheet.innerHTML = "body {background-color: #D0D5DA; font-family:'Helvetica', sans-serif;} " +
-    "div {background-color: #DAE1E5; margin: 1%; padding: 2%; overflow-y: auto;} " +
-    "p {margin: 12px 10px;} " +
-    "#tests { width: 30%; height: 80%; float: left; } " +
-    "#console{float:right; width: 50%; height: 80%; color: #555; font-family: monospace;}";
-  p("head").value[0].appendChild(stylesheet);
+  p("#widget_1").event(
+    ["show", function(ev){
+    var strings = ["New Widget", "Custom 'show' event fired from click handler"],
+    elem = p("#widget_1");
+    (elem.html() == strings[0]) ? elem.html(strings[1]) : elem.html(strings[0]);
+    }]
+  );
+  p("#widget_1").click(function(ev){ p("#widget_1").trigger("show") });
 }

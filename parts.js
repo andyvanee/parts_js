@@ -14,18 +14,22 @@
     var f = fn();
     this[name] = function(args) {var r = f(this, args); if(r) return r; return this;}
   };
+  parts.delegate = function(name, fn, arg){
+    var f = fn();
+    this[name] = function(args) {var r = f(this, args); if(r) return r; return this;}
+  };
   parts.select = function(selector) {
     var f = function(){}; f.prototype = this;
     var newObj = new f();
     newObj.queryString = selector;
     newObj.value = document.getElementById(selector);
     return newObj;
-  };  
+  };
   parts.set_value = function(value) {
     this.queryString = "";
     this.value = value;
     return this;
-  }
+  };
   return (window.parts = window.p = parts);
 })();
 
@@ -69,14 +73,62 @@ parts.mixin(
 );
 
 parts.mixin(
+  "click",
+  function(){
+    var click = function(obj, arg){
+      var f = arg;
+      if (typeof f == "function") {
+        obj.each(function(value, index, arr){
+          value.addEventListener("click", f, false);
+        });
+      }
+    }
+    return click;
+  }
+);
+
+parts.mixin(
+  "event",
+  function(){
+    var click = function(obj, args){
+      var ev = args[0],
+      f = args[1];
+      if ((typeof f == "function") && (typeof ev == "string")){
+        obj.each(function(value, index, arr){
+          value.addEventListener(ev, f, false);
+        });
+      }
+    }
+    return click;
+  }
+);
+
+parts.mixin(
+  "trigger",
+  function(){
+    var trigger = function(obj, arg){
+      var ev = arg,
+      event = document.createEvent("UIEvents");
+      event.initEvent(ev, true, true);
+      obj.each(function(value, index, arr){
+        value.dispatchEvent(event);
+      });
+    }
+    return trigger;
+  }
+);
+
+parts.mixin(
   "widget",
   function(){
     var widget = function(obj, arg){
       var elem = document.createElement(arg.type);
       elem.id = arg.id;
       elem.className = arg.className;
-      elem.style.cssText = arg.style;
       elem.innerHTML = arg.content;
+      if (arg.selectable === false){
+        elem.onselectstart = function(){return false}
+      }
       var parent = obj.value[0];
       parent.appendChild(elem);
     }
@@ -122,12 +174,20 @@ parts.mixin(
 parts.mixin(
   "select",
   function(){
-    var select = function(obj, selector) {
+    var select = function(obj, arg) {
       var f = function(){};
       f.prototype = obj;
+      var val = [], query = "";
+      if (typeof arg == "object"){
+        val.push(arg);
+      }
+      if (typeof arg == "string"){
+        query = arg;
+        val = sel(arg);
+      }
+      f.prototype.value = val;
+      f.prototype.queryString = query;
       var newObj = new f();
-      newObj.queryString = selector;
-      newObj.value = sel(selector);
       return newObj;
     }
   return select;
