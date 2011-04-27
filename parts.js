@@ -30,6 +30,33 @@
     this.value = value;
     return this;
   };
+  parts._signature = function(obj){
+    var strContent = "";
+    for (var i=0; i < obj.value.length; i++){
+      if (obj.value[i].innerHTML != undefined){
+        strContent += obj.value[i].innerHTML;
+      }
+      else strContent += obj.value[i].toString();
+    }
+    if (strContent.length < 4) {
+      strContent = p._idHash()
+    }
+    
+    var sum = 0;
+    for (var i=0; i < strContent.length; i++){
+      sum += strContent.charCodeAt(i);
+    }
+    return sum % 9999999999999999;
+    
+  };
+  parts._idHash = function(){
+    var hash = "";
+    for(var i=0; i < 16; i++){
+      var z = Math.floor(Math.random() * 36);
+      hash += "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ".substring(z,z+1);
+    }
+    return hash;
+  };
   return (window.parts = window.p = parts);
 })();
 
@@ -177,17 +204,19 @@ parts.mixin(
     var select = function(obj, arg) {
       var f = function(){};
       f.prototype = obj;
-      var val = [], query = "";
+      var newObj = new f();
+      
       if (typeof arg == "object"){
-        val.push(arg);
+        newObj.queryString = "";
+        newObj.value[0] = arg;
       }
       if (typeof arg == "string"){
-        query = arg;
-        val = sel(arg);
+        newObj.queryString = arg;
+        newObj.value = sel(arg);
       }
-      f.prototype.value = val;
-      f.prototype.queryString = query;
-      var newObj = new f();
+      newObj.idhash = p._idHash();
+      newObj.sig = p._signature(newObj);
+      //console.log(newObj.sig);
       return newObj;
     }
   return select;

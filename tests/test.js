@@ -5,10 +5,10 @@ window.onload = function(){
     var value = p("body");
     var value2 = p("#hello");
     var value3 = p("body");
-    equals(QUnit.equiv(value, value2), false, "Different objects");
-    equals(QUnit.equiv(value, value3), true, "Same objects");
-    equals(QUnit.equiv(value.value, value2.value), false, "Different value");
-    equals(QUnit.equiv(value.value, value3.value), true, "Same value");
+    equals(QUnit.equiv(value.sig, value2.sig), false, "Different objects");
+    equals(QUnit.equiv(value.sig, value3.sig), true, "Same objects - Different creation");
+    //equals(QUnit.equiv(value.value, value2.value), false, "Different value");
+    //equals(QUnit.equiv(value.value, value3.value), true, "Same value");
     equals(QUnit.equiv(value.value[0], value2.value[0]), false, "Different value[0]");
     equals(QUnit.equiv(value.value[0], value3.value[0]), true, "Same value[0]");
   });
@@ -20,13 +20,21 @@ window.onload = function(){
     var createdElement = p("#qunit-fixture").html(stringContents);
     var createdInnerHTML = p("#qunit-fixture").html();
     var secondInnerHTML = createdElement.html();
-    var selectedElement = p("#qunit-fixture");
+    var selectedElement = p("#qunit-fixture").append().click();
+    var selectedElement2 = p("#qunit-fixture");
     p("#qunit-fixture").html("<p>void</p>");
     var modifiedInnerHTML = p("#qunit-fixture").html();
     
-    equals(QUnit.equiv(createdElement, selectedElement),
-        true, "Selected Elements & Chained Elements equivalent"
+    equals(QUnit.equiv(createdElement.sig, selectedElement.sig),
+        false, "Same Selected Elements & Chained Elements, different contents"
     );
+    equals(QUnit.equiv(createdElement.queryString, selectedElement.queryString),
+        true, "Query string preserved through chaining"
+    );
+    equals(QUnit.equiv(selectedElement.sig, selectedElement2.sig),
+        true, "Signature preserved through chaining"
+    );
+    
     equals(QUnit.equiv(createdInnerHTML, secondInnerHTML),
         true, "HTML contents by selection or reference"
     );

@@ -1,7 +1,7 @@
 body {background-color: #D0D5DA; font-family:'Helvetica', sans-serif;}
 #wrapper {min-width: 500px; height: 100%; margin: 0 auto;}
 #tests, #console { border-left: 1px solid #EEE; margin: 10px; padding: 2% 5%; overflow-y: auto;}
-p {margin: 12px 10px;}
+p {margin: 6px 10px;}
 #tests { width: 300px; float: left;}
 #console{ width: 400px; color: #555; font-family: monospace;}
 
