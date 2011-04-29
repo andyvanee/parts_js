@@ -1,9 +1,10 @@
-body {background-color: #D0D5DA; font-family:'Helvetica', sans-serif;}
-#wrapper {min-width: 500px; height: 100%; margin: 0 auto;}
-#tests, #console { border-left: 1px solid #EEE; margin: 10px; padding: 2% 5%; overflow-y: auto;}
+body {background-color: #D0D5DA; font: normal normal 12px 'Helvetica', sans-serif;}
+#wrapper {min-width: 500px; margin: 0 auto;}
+#tests, #console { }
+h1 {font-weight: normal; font-size: 1.8em; background-color: #666; color: #FFF; padding: 10px 22px;}
 p {margin: 6px 10px;}
-#tests { width: 300px; float: left;}
-#console{ width: 400px; color: #555; font-family: monospace;}
+#tests { }
+#console{ }
 
 .my_widget {background-color: #777; color: #FFF; margin: 12px 0; padding: 12px;}
 .my_widget:active {background-color: #AAA; color: #000;}

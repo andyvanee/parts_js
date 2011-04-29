@@ -7,8 +7,8 @@
  
 (function() {
   var parts = function(arg) {
-    if (typeof arg == "string") { return parts.select(arg) }
-    else { return parts.set_value(arg) }
+    if (typeof arg == "string") { return pt.select(arg) }
+    else { return pt.set_value(arg) }
   };
   parts.mixin = function(name, fn, args) {
     var f = fn();
@@ -27,7 +27,9 @@
   };
   parts.set_value = function(value) {
     this.queryString = "";
-    this.value = value;
+    this.value = [];
+    if (value.length) { this.value = value }
+    else { this.value[0] = value }
     return this;
   };
   parts._signature = function(obj){
@@ -36,17 +38,17 @@
       if (obj.value[i].innerHTML != undefined){
         strContent += obj.value[i].innerHTML;
       }
-      else strContent += obj.value[i].toString();
+      else strContent += obj[i].toString();
     }
     if (strContent.length < 4) {
-      strContent = p._idHash()
+      strContent = pt._idHash()
     }
     
     var sum = 0;
     for (var i=0; i < strContent.length; i++){
       sum += strContent.charCodeAt(i);
     }
-    return sum % 9999999999999999;
+    return sum;
     
   };
   parts._idHash = function(){
@@ -57,13 +59,13 @@
     }
     return hash;
   };
-  return (window.parts = window.p = parts);
+  return (window.pt = parts);
 })();
 
 
 // p().each( fn(element, index, object) )
 
-parts.mixin( 
+pt.mixin( 
   "each",
   function(){
     var each = function(obj, fn) {
@@ -78,7 +80,7 @@ parts.mixin(
 // p().html("string")         set string contents of all matched elements 
 // p().html(function(oldHTML){ ... })    set all elements using function
 
-parts.mixin(
+pt.mixin(
   "html", 
   function(){
     var html = function(obj, arg){
@@ -99,7 +101,7 @@ parts.mixin(
   }
 );
 
-parts.mixin(
+pt.mixin(
   "click",
   function(){
     var click = function(obj, arg){
@@ -114,7 +116,7 @@ parts.mixin(
   }
 );
 
-parts.mixin(
+pt.mixin(
   "event",
   function(){
     var click = function(obj, args){
@@ -130,7 +132,7 @@ parts.mixin(
   }
 );
 
-parts.mixin(
+pt.mixin(
   "trigger",
   function(){
     var trigger = function(obj, arg){
@@ -145,7 +147,7 @@ parts.mixin(
   }
 );
 
-parts.mixin(
+pt.mixin(
   "widget",
   function(){
     var widget = function(obj, arg){
@@ -163,7 +165,7 @@ parts.mixin(
   }
 );
 
-parts.mixin(
+pt.mixin(
   "append", 
   function(){
     var append = function(obj, arg){
@@ -183,7 +185,22 @@ parts.mixin(
   }
 );
 
-parts.mixin(
+pt.mixin(
+  "toArray",
+  function(){
+    var toArr = function(obj){
+      var newArr = [];
+      var i=0;
+      for (i; i < obj.value.length; i++){
+        newArr[i] = obj.value[i];
+      }
+      return newArr;
+    }
+    return toArr;
+  }
+);
+
+pt.mixin(
   "reduce",
   function(){
     var reduce = function(obj, arg){
@@ -198,24 +215,32 @@ parts.mixin(
   }
 )
 
-parts.mixin(
+pt.mixin(
   "select",
   function(){
     var select = function(obj, arg) {
       var f = function(){};
       f.prototype = obj;
       var newObj = new f();
+      newObj.value = [];
       
       if (typeof arg == "object"){
         newObj.queryString = "";
         newObj.value[0] = arg;
       }
       if (typeof arg == "string"){
+        var val = sel(arg), i = 0;
+        for (i; i < val.length; i++){
+          newObj.value[i] = val[i];
+        }
+        newObj.length = i;
         newObj.queryString = arg;
-        newObj.value = sel(arg);
       }
-      newObj.idhash = p._idHash();
-      newObj.sig = p._signature(newObj);
+      if (typeof arg == "array"){
+        newObj.value = arg;
+      }
+      newObj.idhash = pt._idHash();
+      newObj.sig = pt._signature(newObj);
       //console.log(newObj.sig);
       return newObj;
     }

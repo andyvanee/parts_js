@@ -39,8 +39,8 @@ window.onload = function(){
         true, "HTML contents by selection or reference"
     );
     equals(QUnit.equiv(
-        createdElement.value[0],
-        selectedElement.value[0]),
+        createdElement[0],
+        selectedElement[0]),
         true, "Selected Elements & Chained Elements value[0] equivalent"
     );
     equals(QUnit.equiv(
