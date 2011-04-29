@@ -1,42 +1,31 @@
 Parts_JS
 
-The parts library is meant to be completely modular in design. The core
-of the library is extremely small but easy to build upon.
+Parts is a JavaScript library that implements strong typing and type adapters.
 
-At the moment the library only provides a mechanism for including a selector
-library, and mixins to extend the library.
+The parts library is meant to be completely modular in design. The core of the library is extremely small but easy to build upon.
+
+At the moment the library only provides a mechanism for including a selector library, and mixins to extend the library.
 
 p()
-The selector is the default function. It gets the ball rolling by wrapping an
-object in a chainable function. This can be an array of DOM objects, but it 
-could just as easily be a string or array that you want your functions to 
-operate upon.
+The selector is the default function. It gets the ball rolling by wrapping an object in a chainable function. This can be an array of DOM objects, but it could just as easily be a string or array that you want your functions to operate upon.
 
 p.value
 This is the current wrapped object. Usually an array of DOM elements.
 
 p.mixin()
-The mixin function is the mechanism for adding functions to the library. The
-mixin functions are called with the current object as the first argument and
-any user supplied argument as the second. Mixin functions should not return
-a value unless it makes sense for them to. If a mixin function returns a value,
-the chain is broken and the value is returned to the caller. The toString function
-is a good example of an unchainable function: it must return a string.
+The mixin function is the mechanism for adding functions to the library. The mixin functions are called with the current object as the first argument and any user supplied argument as the second. Mixin functions should not return a value unless it makes sense for them to. If a mixin function returns a value, the chain is broken and the value is returned to the caller. The toString function is a good example of an unchainable function: it must return a string.
 
 sel()
-sel is the barebones selector library included. At the moment it only supports
-class, id, tag name and child selectors. Some examples of what's currently
-supported:
+sel is the barebones selector library included. At the moment it only supports class, id, tag name and child selectors. Some examples of what's currently supported:
+
 p("#id")
 p(".class")
 p("body")
 p("li #id")
 But NOT p("div.class") yet...
 
-If this is too restrictive, i've included a version parts_sizzle.js which supports
-all the css selectors you could imagine.
+If this is too restrictive, i've included a version parts_sizzle.js which supports all the css selectors you could imagine.
  
 To start, clone the repo and open index.html for a basic demo.
 
-That's about it for now. Because this is extremely alpha software, use caution and
-please provide feedback!
+That's about it for now. Because this is extremely alpha software, use caution and please provide feedback!
