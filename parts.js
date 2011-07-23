@@ -4,7 +4,7 @@
  *  Released under the MIT, BSD, and GPL Licenses.
  *  More information: http://andyvanee.com/
  */
- 
+
 (function() {
   var parts = function(arg) {
     if (typeof arg == "string") { return pt.select(arg) }
